@@ -21,7 +21,17 @@
 
   @if ($posts->count())    
     <div class="card mb-3">
-      <img src="img/{{ $posts[0]->category->slug }}.jpg" height="400" class="card-img-top object-fit-cover" alt="{{ $posts[0]->category->slug }}">
+      @if ($posts[0]->image)
+      <div style="max-height: 400px; overflow:hidden">
+        <img src="{{ asset('storage/'. $posts[0]->image) }}"  class="img-fluid" alt="{{ $posts[0]->category->slug }}">
+      </div>        
+      @else
+      <div style="max-height: 400px; overflow:hidden">
+        <img src="img/{{ $posts[0]->category->slug }}.jpg" height="400px" class="card-img-top object-fit-cover" alt="{{ $posts[0]->category->slug }}">
+      </div>
+      @endif
+
+      
       <div class="card-body text-center">
         <h3 class="card-title"> <a href="/posts/{{ $posts[0]->slug }}" class="text-decoration-none text-dark">{{ $posts[0]->title }}</a></h3>
         <p>
@@ -42,7 +52,13 @@
               <div class="position-absolute px-3 py-2" style="background-color: rgba(0,0,0,0.7)">
                 <a href="/posts?category={{ $post->category->slug }}" class="text-white text-decoration-none">{{ $post->category->name }}</a>
               </div>
-              <img src="img/{{ $post->category->slug }}.jpg" height="300" class="card-img-top object-fit-cover" alt="{{ $post->category->slug }}">
+              @if ($post->image)
+                <img src="{{ asset('storage/'. $post->image) }}" height="300px" class="img-fluid" alt="{{ $post->category->slug }}">       
+              @else
+              <div style="max-height: 350px; overflow:hidden">
+                <img src="img/{{ $post->category->slug }}.jpg" height="300px" class="card-img-top object-fit-cover" alt="{{ $post->category->slug }}">
+              </div>
+              @endif
               <div class="card-body">
                 <h5 class="card-title">{{ $post->title }}</h5>
                 <p>
